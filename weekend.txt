@@ -1,0 +1,17 @@
+SET SERVEROUTPUT ON;
+
+DECLARE
+    v_date DATE := TO_DATE('2024-05-11', 'YYYY-MM-DD'); -- Change the date as needed
+    v_day VARCHAR2(9);
+BEGIN
+    -- Get the day of the week for the given date
+    SELECT TO_CHAR(v_date, 'Day') INTO v_day FROM DUAL;
+    
+    -- Check if the day is Saturday or Sunday
+    IF v_day IN ('Saturday', 'Sunday') THEN
+        DBMS_OUTPUT.PUT_LINE('The date falls on a weekend.');
+    ELSE
+        DBMS_OUTPUT.PUT_LINE('The date does not fall on a weekend.');
+    END IF;
+END;
+/

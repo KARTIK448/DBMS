@@ -1,0 +1,33 @@
+Consider Dept table
+DEPTNO 	DNAME	LOC
+
+Perform the following: 
+1. Rename the table dept as department
+ 2. Add a new column PINCODE with not null constraints to the existing table DEPT 
+3. All constraints and views that reference the column are dropped automatically, along with the column. 
+4. Rename the column DNAME to DEPT_NAME in dept table
+ 5. Change the data type of column loc as CHAR with size 10 
+6. Delete table
+
+
+Rename the table DEPT as DEPARTMENT:
+
+
+ALTER TABLE DEPT RENAME TO DEPARTMENT;
+Add a new column PINCODE with not null constraints to the existing table DEPARTMENT:
+
+ALTER TABLE DEPARTMENT ADD COLUMN PINCODE INT NOT NULL;
+All constraints and views that reference the column are dropped automatically, along with the column:
+
+ALTER TABLE DEPARTMENT DROP COLUMN LOC;
+
+
+Rename the column DNAME to DEPT_NAME in the DEPARTMENT table:
+
+ALTER TABLE DEPARTMENT RENAME COLUMN DNAME TO DEPT_NAME;
+Change the data type of column LOC to CHAR with size 10:
+
+ALTER TABLE DEPARTMENT ALTER COLUMN LOC SET DATA TYPE CHAR(10);
+Delete the table DEPARTMENT:
+
+DROP TABLE DEPARTMENT;

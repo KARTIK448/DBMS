@@ -1,0 +1,103 @@
+Aim: Design at 10 SQL queries for suitable database applications using SQL DML statements: all types of join, sub-query and view.
+For the given Library database
+BOOK (Book_ISBN [PK], Title[Not Null], Publisher_ Name, price[Check Price>0], Date_Of_Publication,Book_Copy ), 
+BOOK_AUTHORS (Book_ISBN [PK]Author_Name [PK], Author_City)
+    a) Select Book_ISBN, Title, Author_Name from relations Book and Book_Authors INNER JOIN on attribute Book_ISBN.
+    b) Select Book_ISBN, Title, Publisher, Author_Name from relations Book and Book_Authors LEFT OUTER JOIN on attribute Book_ISBN.
+    c) Select Book_ISBN, Title, Publisher, Author_Name from relations Book and Book_Authors RIGHT OUTER JOIN on attribute Book_ISBN.
+d)Select Book_ISBN, Title from relation Book whose author is living in City =’Pune’
+
+Here are 10 SQL queries using SQL DML statements for the given Library database:
+
+a) Select Book_ISBN, Title, Author_Name from relations Book and Book_Authors INNER JOIN on attribute Book_ISBN:
+
+sql
+
+SELECT b.Book_ISBN, b.Title, ba.Author_Name
+FROM BOOK b
+INNER JOIN BOOK_AUTHORS ba ON b.Book_ISBN = ba.Book_ISBN;
+
+b) Select Book_ISBN, Title, Publisher, Author_Name from relations Book and Book_Authors LEFT OUTER JOIN on attribute Book_ISBN:
+
+sql
+
+SELECT b.Book_ISBN, b.Title, b.Publisher_Name, ba.Author_Name
+FROM BOOK b
+LEFT OUTER JOIN BOOK_AUTHORS ba ON b.Book_ISBN = ba.Book_ISBN;
+
+c) Select Book_ISBN, Title, Publisher, Author_Name from relations Book and Book_Authors RIGHT OUTER JOIN on attribute Book_ISBN:
+
+sql
+
+SELECT b.Book_ISBN, b.Title, b.Publisher_Name, ba.Author_Name
+FROM BOOK b
+RIGHT OUTER JOIN BOOK_AUTHORS ba ON b.Book_ISBN = ba.Book_ISBN;
+
+d) Select Book_ISBN, Title from relation Book whose author is living in City =’Pune’:
+
+sql
+
+SELECT b.Book_ISBN, b.Title
+FROM BOOK b
+JOIN BOOK_AUTHORS ba ON b.Book_ISBN = ba.Book_ISBN
+WHERE ba.Author_City = 'Pune';
+
+e) Select Book_ISBN, Title, Author_Name from relations Book and Book_Authors INNER JOIN on attribute Book_ISBN using sub-query:
+
+sql
+
+SELECT Book_ISBN, Title, Author_Name
+FROM (
+    SELECT b.Book_ISBN, b.Title, ba.Author_Name
+    FROM BOOK b
+    INNER JOIN BOOK_AUTHORS ba ON b.Book_ISBN = ba.Book_ISBN
+) AS joined_table;
+
+f) Select Book_ISBN, Title, Publisher, Author_Name from relations Book and Book_Authors LEFT OUTER JOIN on attribute Book_ISBN using sub-query:
+
+sql
+
+SELECT Book_ISBN, Title, Publisher_Name, Author_Name
+FROM (
+    SELECT b.Book_ISBN, b.Title, b.Publisher_Name, ba.Author_Name
+    FROM BOOK b
+    LEFT OUTER JOIN BOOK_AUTHORS ba ON b.Book_ISBN = ba.Book_ISBN
+) AS joined_table;
+
+g) Select Book_ISBN, Title, Publisher, Author_Name from relations Book and Book_Authors RIGHT OUTER JOIN on attribute Book_ISBN using sub-query:
+
+sql
+
+SELECT Book_ISBN, Title, Publisher_Name, Author_Name
+FROM (
+    SELECT b.Book_ISBN, b.Title, b.Publisher_Name, ba.Author_Name
+    FROM BOOK b
+    RIGHT OUTER JOIN BOOK_AUTHORS ba ON b.Book_ISBN = ba.Book_ISBN
+) AS joined_table;
+
+h) Select Book_ISBN, Title from relation Book whose author is living in City =’Pune’ using sub-query:
+
+sql
+
+SELECT Book_ISBN, Title
+FROM (
+    SELECT b.Book_ISBN, b.Title
+    FROM BOOK b
+    JOIN BOOK_AUTHORS ba ON b.Book_ISBN = ba.Book_ISBN
+    WHERE ba.Author_City = 'Pune'
+) AS filtered_books;
+
+i) Create a view to display Book ISBN, Title, Publisher, Author Name:
+
+sql
+
+CREATE VIEW Book_Details AS
+SELECT b.Book_ISBN, b.Title, b.Publisher_Name, ba.Author_Name
+FROM BOOK b
+JOIN BOOK_AUTHORS ba ON b.Book_ISBN = ba.Book_ISBN;
+
+j) Select all records from the created view:
+
+sql
+
+SELECT * FROM Book_Details;

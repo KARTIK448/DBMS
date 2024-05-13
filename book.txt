@@ -1,0 +1,69 @@
+For the given Library database
+BOOK (Book_ISBN [PK], Title[Not Null], Publisher_ Name, price[Check Price>0], Date_Of_Publication,Book_Copy ), 
+BOOK_AUTHORS (Book_ISBN [PK,FK]Author_Name [PK], Author_City) 
+Solve the following Assignments -
+Aim: Design at least 10 SQL DML queries for suitable database applications using SQL DML statements: Insert, Select, Update, Delete with operators, functions and set operators.
+    i) Insert at least five records in each table.
+    ii) Select details of Books whose Author lives in “Pune”.
+    iii) Select Book Names from table Book whose copies are in between 10 to 15.
+    iv) Update Book Copies as “10” whose Book Publisher is  “Tata MacGraw Hill”.
+    v) Select the Name of Publisher who supplied maximum books.
+
+
+Here are 10 SQL DML queries for the given Library database:
+
+i) Insert at least five records in each table:
+
+sql
+
+-- Insert into BOOK table
+INSERT INTO BOOK (Book_ISBN, Title, Publisher_Name, price, Date_Of_Publication, Book_Copy)
+VALUES ('ISBN1', 'Book 1', 'Publisher A', 25.99, '2023-01-01', 10),
+       ('ISBN2', 'Book 2', 'Publisher B', 19.99, '2022-12-15', 12),
+       ('ISBN3', 'Book 3', 'Publisher C', 29.99, '2024-03-20', 8),
+       ('ISBN4', 'Book 4', 'Publisher A', 15.99, '2023-05-10', 14),
+       ('ISBN5', 'Book 5', 'Publisher D', 35.99, '2022-11-30', 11);
+
+-- Insert into BOOK_AUTHORS table
+INSERT INTO BOOK_AUTHORS (Book_ISBN, Author_Name, Author_City)
+VALUES ('ISBN1', 'Author 1', 'Pune'),
+       ('ISBN2', 'Author 2', 'Mumbai'),
+       ('ISBN3', 'Author 3', 'Pune'),
+       ('ISBN4', 'Author 4', 'Delhi'),
+       ('ISBN5', 'Author 5', 'Pune');
+
+ii) Select details of Books whose Author lives in “Pune”:
+
+sql
+
+SELECT B.Book_ISBN, B.Title, B.Publisher_Name, B.price, B.Date_Of_Publication, B.Book_Copy
+FROM BOOK B
+JOIN BOOK_AUTHORS BA ON B.Book_ISBN = BA.Book_ISBN
+WHERE BA.Author_City = 'Pune';
+
+iii) Select Book Names from table Book whose copies are in between 10 to 15:
+
+sql
+
+SELECT Title
+FROM BOOK
+WHERE Book_Copy BETWEEN 10 AND 15;
+
+iv) Update Book Copies as “10” whose Book Publisher is “Tata MacGraw Hill”:
+
+sql
+
+UPDATE BOOK
+SET Book_Copy = 10
+WHERE Publisher_Name = 'Tata MacGraw Hill';
+
+v) Select the Name of Publisher who supplied maximum books:
+
+sql
+
+SELECT Publisher_Name
+FROM BOOK
+GROUP BY Publisher_Name
+ORDER BY COUNT(*) DESC
+LIMIT 1;
+

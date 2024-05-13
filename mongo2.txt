@@ -1,0 +1,39 @@
+User
+Design and Implement any 5 query using MongoDB.
+Problem Statement: With reference to Book collection in Assignment B-1 write MongoDB Queries for
+(book_isbn,title,punlisher_name,author(Name, Address, Phone No[landline, mobile]), publisher_city, price,copies
+        a. Count the number of documents in the collection.
+        b. Arrange the documents in descending order of book_isbn.
+        c. Select Book Names whose title is ”DBMS” .
+        d. Update Book Copies as “10” whose Book Publisher is  “Tata MacGraw Hill”.
+ChatGPT
+
+Here are 5 MongoDB queries for the Book collection:
+
+a. Count the number of documents in the collection:
+
+javascript
+
+// Count the number of documents in the collection
+db.Book.count();
+
+b. Arrange the documents in descending order of book_isbn:
+
+javascript
+
+// Arrange the documents in descending order of book_isbn
+db.Book.find().sort({ book_isbn: -1 });
+
+c. Select Book Names whose title is "DBMS":
+
+javascript
+
+// Select Book Names whose title is "DBMS"
+db.Book.find({ title: "DBMS" }, { title: 1, _id: 0 });
+
+d. Update Book Copies as "10" whose Book Publisher is "Tata MacGraw Hill":
+
+javascript
+
+// Update Book Copies as "10" whose Book Publisher is "Tata MacGraw Hill"
+db.Book.updateMany({ publisher_name: "Tata MacGraw Hill" }, { $set: { copies: 10 } });

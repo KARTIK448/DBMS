@@ -1,0 +1,46 @@
+create table oldRollcall(ID int,NAME varchar(50),class varchar(10));
+
+insert into oldRollcall(ID,NAME,class) values(1,'ABC','TE');
+insert into oldRollcall(ID,NAME,class) values(2,'DEF','TE');
+insert into oldRollcall(ID,NAME,class) values(3,'XYZ','TE');
+insert into oldRollcall(ID,NAME,class) values(4,'QWE','TE');
+insert into oldRollcall(ID,NAME,class) values(5,'RTY','TE');
+
+select * from oldRollcall;
+
+create table newRollcall(ID int,NAME varchar(50),class varchar(90));
+
+insert into  newRollcall(ID,NAME,class) values(6,'YTR ','TE');
+insert into newRollcall(ID,NAME,class) values(3,'UIO','TE');
+insert into newRollcall(ID,NAME,class) values(5,'JHF','TE');
+
+select * from newRollcall;
+
+set SERVEROUTPUT ON;
+declare
+  testID oldRollcall.ID%type;
+  testNAME   oldRollcall.NAME%type;
+  testClass  oldRollcall.class%type;
+
+  cursor oldStudRoll is
+  select * from oldRollcall ;
+  
+  cursor newStudRoll(ID int) is
+  select ID from newRollCall where ID=testID;
+begin
+   open oldStudRoll;
+   loop
+    fetch oldStudRoll into testID,testNAME,testClass;
+    exit when oldStudRoll%notfound;
+    open newStudRoll(testID);
+    fetch newStudRoll into testID;
+    if newStudRoll%found then
+    dbms_output.put_line('Rollno exists');
+    else
+      dbms_output.put_line('New Student');    
+      insert into newRollCall values(testID,testNAME,testClass);
+    end if;
+    close newStudRoll;
+   end loop;
+   close oldStudRoll;
+end;

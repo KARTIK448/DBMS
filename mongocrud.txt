@@ -1,0 +1,60 @@
+Aim: Design and develop MongoDB queries using CRUD operations.
+Problem Statement: Design and Develop database using MongoDB Client- MongoDB  Data sever to Implement all basic CRUD operations and administration commands using two tier architecture. (Command Prompt)
+        a. Create a collection named Book. Add 5 documents in the collection with keys (book_isbn,title,punlisher_name,author(Name, Address, Phone No[landline, mobile]), publisher_city, price,copies)
+        b. Give details of Books whose Publisher lives in “Pune”.
+        c. Delete name Book from Book whose name start with “D”
+        d. Change the city of publisher “Pearson” to “Pune”.
+        e. Find the details of publisher named “Pearson”.
+
+
+db.createCollection("Book")
+
+// Insert 5 documents into the Book collection
+db.Book.insertMany([
+    { 
+        book_isbn: "ISBN1",
+        title: "Book 1",
+        publisher_name: "Publisher A",
+        author: { name: "Author 1", address: "Address 1", phone_no: { landline: "1234567890", mobile: "9876543210" } },
+        publisher_city: "Pune",
+        price: 25.99,
+        copies: 10
+    },
+    {
+        book_isbn: "ISBN2",
+        title: "Book 2",
+        publisher_name: "Publisher B",
+        author: { name: "Author 2", address: "Address 2", phone_no: { landline: "1234567890", mobile: "9876543210" } },
+        publisher_city: "Mumbai",
+        price: 19.99,
+        copies: 12
+    },
+    // Add more documents as needed
+]);
+b. Give details of books whose Publisher lives in “Pune”:
+
+
+
+// Find details of books whose Publisher lives in "Pune"
+db.Book.find({ publisher_city: "Pune" });
+
+c. Delete books from Book whose name starts with “D”:
+
+
+
+// Delete books from Book collection whose name starts with "D"
+db.Book.deleteMany({ title: /^D/ });
+
+d. Change the city of publisher “Pearson” to “Pune”:
+
+
+
+// Update the city of the publisher "Pearson" to "Pune"
+db.Book.updateMany({ publisher_name: "Pearson" }, { $set: { publisher_city: "Pune" } });
+
+e. Find the details of the publisher named “Pearson”:
+
+
+
+// Find details of the publisher named "Pearson"
+db.Book.find({ publisher_name: "Pearson" });

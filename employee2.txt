@@ -1,0 +1,58 @@
+Consider the schema for Company Database:
+EMPLOYEE(SSN, Name, Address, Sex, Salary, SuperSSN, DNo)
+DEPARTMENT(DNo, DName, MgrSSN, MgrStartDate)
+ DLOCATION(DNo,DLoc)
+ PROJECT(PNo, PName, PLocation, DNo)
+ WORKS_ON(SSN, PNo, Hours)
+                1. Find the sum of the salaries of all employees of the ‘Accounts’ department, as well as the maximum salary, the minimum salary, and the average salary in this department.
+                2. Retrieve the name of each employee who works on all the projects controlled by department number 5
+
+
+    Find the sum of the salaries of all employees of the ‘Accounts’ department, as well as the maximum salary, the minimum salary, and the average salary in this department:
+
+sql
+
+SELECT 
+    SUM(e.Salary) AS total_salary,
+    MAX(e.Salary) AS max_salary,
+    MIN(e.Salary) AS min_salary,
+    AVG(e.Salary) AS avg_salary
+FROM 
+    EMPLOYEE e
+JOIN 
+    DEPARTMENT d ON e.DNo = d.DNo
+WHERE 
+    d.DName = 'Accounts';
+
+
+       
+    2 Retrieve the name of each employee who works on all the projects controlled by department number 5:
+
+sql
+
+SELECT 
+    e.Name
+FROM 
+    EMPLOYEE e
+WHERE 
+    e.DNo = 5
+AND 
+    NOT EXISTS (
+        SELECT 
+            p.PNo
+        FROM 
+            PROJECT p
+        WHERE 
+            p.DNo = e.DNo
+        AND 
+            NOT EXISTS (
+                SELECT 
+                    w.SSN
+                FROM 
+                    WORKS_ON w
+                WHERE 
+                    w.PNo = p.PNo
+                AND 
+                    w.SSN = e.SSN
+            )
+    );

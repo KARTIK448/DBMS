@@ -1,0 +1,62 @@
+Aim: Implement aggregation and indexing with suitable example using MongoDB
+Problem statement: Create a collection named “ORDERS” that contain documents of the following prototype and solve the following queries:
+ {
+  cust_id: "abc123",
+  ord_date: new Date("Oct 04, 2012"),
+  status: 'A',
+  price: 50,
+  items: [ { sku: "xxx", qty: 25, price: 1 },
+           { sku: "yyy", qty: 25, price: 1 } ]
+        }
+                    a. Count all records from orders
+                    b. Sum the price field from orders
+                    c. For each unique cust_id, sum the price field.
+For each unique cust_id, sum the price field, results sorted by sum
+
+
+    Create an "ORDERS" collection:
+
+javascript
+
+db.createCollection("ORDERS")
+
+    Insert documents into the "ORDERS" collection:
+
+javascript
+
+db.ORDERS.insertMany([
+    { 
+        cust_id: "abc123",
+        ord_date: new Date("Oct 04, 2012"),
+        status: 'A',
+        price: 50,
+        items: [ { sku: "xxx", qty: 25, price: 1 },
+                 { sku: "yyy", qty: 25, price: 1 } ]
+    },
+    // Insert more documents as needed
+]);
+
+Now, let's solve the queries:
+
+a. Count all records from orders:
+
+javascript
+
+db.ORDERS.count()
+
+b. Sum the price field from orders:
+
+javascript
+
+db.ORDERS.aggregate([
+    { $group: { _id: null, total_price: { $sum: "$price" } } }
+])
+
+c. For each unique cust_id, sum the price field, results sorted by sum:
+
+javascript
+
+db.ORDERS.aggregate([
+    { $group: { _id: "$cust_id", total_price: { $sum: "$price" } } },
+    { $sort: { total_price: 1 } }
+])

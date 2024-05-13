@@ -1,0 +1,59 @@
+Consider Employee table
+ 
+Perform the following
+ 1. Display all the fields of employee table 
+2. Retrieve employee number and their salary 
+3. Retrieve average salary of all employee 
+4. Retrieve number of employee
+ 5. Retrieve distinct number of employee
+ 6. Retrieve total salary of employee group by employee name and count similar names
+ 7. Retrieve total salary of employee which is greater than >120000 
+8. Display name of employee in descending order 
+9. Display details of employee whose name is AMIT and salary greater than 50000;
+ChatGPT
+Sure, here are the SQL queries to perform the tasks you've listed:
+
+Display all the fields of the employee table:
+sql
+Copy code
+SELECT * FROM Employee;
+Retrieve employee number and their salary:
+sql
+Copy code
+SELECT EmployeeNumber, Salary FROM Employee;
+Retrieve the average salary of all employees:
+sql
+Copy code
+SELECT AVG(Salary) AS AverageSalary FROM Employee;
+Retrieve the number of employees:
+sql
+Copy code
+SELECT COUNT(*) AS NumberOfEmployees FROM Employee;
+Retrieve the distinct number of employees:
+sql
+Copy code
+SELECT COUNT(DISTINCT EmployeeNumber) AS DistinctNumberOfEmployees FROM Employee;
+Retrieve the total salary of employees, grouped by employee name, and count similar names:
+sql
+Copy code
+SELECT EmployeeName, SUM(Salary) AS TotalSalary, COUNT(EmployeeName) AS NumberOfSimilarNames 
+FROM Employee 
+GROUP BY EmployeeName;
+Retrieve the total salary of employees which is greater than $120,000:
+sql
+Copy code
+SELECT SUM(Salary) AS TotalSalary 
+FROM Employee 
+WHERE Salary > 120000;
+Display the names of employees in descending order:
+sql
+Copy code
+SELECT EmployeeName 
+FROM Employee 
+ORDER BY EmployeeName DESC;
+Display details of employees whose name is 'AMIT' and salary is greater than $50,000:
+sql
+Copy code
+SELECT * 
+FROM Employee 
+WHERE EmployeeName = 'AMIT' AND Salary > 50000;

@@ -1,0 +1,76 @@
+User
+For the given Library database
+BOOK (Book_ISBN [PK], Title[Not Null], Publisher_ Name, price[Check Price>0], Date_Of_Publication,Book_Copy ), 
+BOOK_AUTHORS (Book_ISBN [PK,FK]Author_Name [PK], Author_City) 
+Solve the following Assignments -
+Aim: Design at least 10 SQL DML queries for suitable database applications using SQL DML statements: Insert, Select, Update, Delete with operators, functions and set operators
+    i) Display name of publishers as per no of books published by them in ascending order.
+    ii) Get publisher names who published at least one book written by author name like ‘K%’.
+    iii) Get book name and Authors names where book written by maximum authors.
+    iv) Get publisher names accordingly books published alphabetically
+    v) Find the no of books published in 01 Jan 2014 to till date.
+    vi) Delete the book from Book table written by Author ‘Korth’.
+
+
+Here are SQL DML queries to solve the given assignments:
+
+i) Display name of publishers as per the number of books published by them in ascending order:
+
+sql
+
+SELECT Publisher_Name, COUNT(*) AS Total_Books
+FROM BOOK
+GROUP BY Publisher_Name
+ORDER BY Total_Books ASC;
+
+ii) Get publisher names who published at least one book written by an author name like ‘K%’:
+
+sql
+
+SELECT DISTINCT Publisher_Name
+FROM BOOK b
+WHERE EXISTS (
+    SELECT 1
+    FROM BOOK_AUTHORS ba
+    WHERE b.Book_ISBN = ba.Book_ISBN
+    AND ba.Author_Name LIKE 'K%'
+);
+
+iii) Get book name and Authors names where a book is written by the maximum number of authors:
+
+sql
+
+SELECT b.Title AS Book_Name, GROUP_CONCAT(ba.Author_Name) AS Authors
+FROM BOOK b
+JOIN BOOK_AUTHORS ba ON b.Book_ISBN = ba.Book_ISBN
+GROUP BY b.Book_ISBN, b.Title
+ORDER BY COUNT(*) DESC
+LIMIT 1;
+
+iv) Get publisher names accordingly to books published alphabetically:
+
+sql
+
+SELECT Publisher_Name
+FROM BOOK
+GROUP BY Publisher_Name
+ORDER BY Publisher_Name ASC;
+
+v) Find the number of books published from 01 Jan 2014 to till date:
+
+sql
+
+SELECT COUNT(*)
+FROM BOOK
+WHERE Date_Of_Publication >= '2014-01-01';
+
+vi) Delete the book from the Book table written by Author ‘Korth’:
+
+sql
+
+DELETE FROM BOOK
+WHERE Book_ISBN IN (
+    SELECT Book_ISBN
+    FROM BOOK_AUTHORS
+    WHERE Author_Name = 'Korth'
+);
